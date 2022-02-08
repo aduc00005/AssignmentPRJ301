@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css" type="text/css"/>
+        <link rel="stylesheet" href="style.css" type="text/css">
+        <link href="CSS/style.css" rel="stylesheet" type="text/css"/>
+
+        <title>Revenue and Expenditure management</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        
+        <div class="Menu">
+            <div class="Chi">
+                <h1>Expenditure</h1>
+                <form>
+                    <table border="0px">
+                        <tr>
+                            <th class="item1">Date:</th>
+                            <th class="item2"><input class="item3" type="text" name="dateC"></th>
+                        </tr>
+                        <tr>
+                            <td>Note:</td>
+                            <td><textarea class="item3" type="text"
+                                          name="noteC"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td>Amount spent:</td>
+                            <td><input class="item3" type="text" name="AmountSpent"></td>
+                        </tr>
+                        <tr>
+                            <td>List:</td>
+                            <td>
+                                <select class="item4"  name="ListC">
+                                    <option value="Eating">Eating</option>
+                                    <option value="DailyExpenses">Daily expenses</option>
+                                    <option value="Clothes">Clothes</option>
+                                    <option value="Cosmetics">Cosmetics</option>
+                                    <option value="TransactionFee">Transaction fee</option>
+                                    <option value="Medical">Medical</option>
+                                    <option value="Education">Education</option>
+                                    <option value="ElectricityBill">Electricity Bill</option>
+                                    <option value="Circulate">circulate</option>
+                                    <option value="CommunicationFee">Communication fee</option>
+                                    <option value="Rent">Rent</option>
+                                    <option value="InvestmentMoney">Investment money</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                    <input class="save" type="submit" value="SAVE"> 
+                </form>
+            </div>
+            <div class="Thu">
+                <h1>Revenue</h1>
+                <form>
+                    <table border="0px">
+                        <tr>
+                            <th class="item1">Date:</th>
+                            <th class="item2"><input class="item3" type="text" name="dateT"></th>
+                        </tr>
+                        <tr>
+                            <td>Note:</td>
+                            <td><textarea class="item3" type="text"
+                                          name="noteT"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td>Proceeds:</td>
+                            <td><input class="item3" type="text" name="Proceeds"></td>
+                        </tr>
+                        <tr>
+                            <td>List:</td>
+                            <td>
+                                <select class="item4" name="ListT">
+                                    <option value="Salary">Salary</option>
+                                    <option value="Allowance">Allowance</option>
+                                    <option value="Bonus">Bonus</option>
+                                    <option value="SideIncome">Side income</option>
+                                    <option value="Invest">Invest</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                    <input class="save" type="submit" value="SAVE"> 
+                </form>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+    </body>
+</html>
