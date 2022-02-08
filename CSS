@@ -1,0 +1,44 @@
+
+.Menu{
+    width: 1000px;
+}
+.Chi{
+    float: left;
+    width: 47%;
+    border: 2px black solid;
+    background-color: yellow;
+    text-align: center;
+    font-weight: bold;
+}
+.Thu {
+    float: right;
+    width: 47%;
+    border: 2px black solid;
+    background-color: yellow;
+    text-align: center;
+    font-weight: bold;
+}
+.save{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+.item1{
+    width: 10%;
+}
+.item2{
+    width: 90%;
+}
+.item3{
+    width: 97%;
+    height: 50px;
+    border: 0px;
+    border-bottom: 1px black solid;
+}
+.item4{
+    width: 40%;
+    height: 25px;
+    font-size: 18px;
+}
+
+
