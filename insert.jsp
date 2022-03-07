@@ -1,12 +1,12 @@
 <%-- 
-    Document   : search
-    Created on : Feb 26, 2022, 9:57:35 PM
+    Document   : insert
+    Created on : Feb 27, 2022, 7:54:57 PM
     Author     : Admin
 --%>
 
-<%@page import="java.util.ArrayList"%>
-<%@page import="model.Product"%>
+<%@page import="model.NguonHang"%>
 <%@page import="model.DanhMuc"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,31 +16,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Sản phẩm</title>
+        <title> Thêm sản phẩm </title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="../CSS/styles.css" rel="stylesheet" type="text/css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
         <%
-            ArrayList<DanhMuc> LoaiSP = (ArrayList<DanhMuc>) request.getAttribute("LoaiSP");
-            ArrayList<Product> Pros = (ArrayList<Product>) request.getAttribute("products");
-            String maLoaiSP = (String) request.getAttribute("MaLoaiSP");
+            ArrayList<DanhMuc> loaiSP = (ArrayList<DanhMuc>) request.getAttribute("LoaiSP");
+            ArrayList<NguonHang> Nguon = (ArrayList<NguonHang>) request.getAttribute("Nguon");
         %>
-        <script>
-            function submitSearchForm()
-            {
-                document.getElementById("searchForm").submit();
-            }
-
-            function deleteProduct(id)
-            {
-                var result = confirm("Bạn có muốn xóa "+id+" không?");
-                if (result)
-                {
-                    window.location.href = "delete?id=" + id;
-                }
-            }
-
-        </script>
     </head>
     <body>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -87,7 +70,7 @@
                                     <a class="nav-link" href="insert">Thêm sản phẩm</a>
                                 </nav>
                             </div>
-                            
+
                             <div class="sb-sidenav-menu-heading"> Nguồn Hàng</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -113,7 +96,7 @@
                                     <a class="nav-link" href="../loaisp/insert">Thêm Loại sản phẩm</a>
                                 </nav>
                             </div>
-                            
+
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 Pages
@@ -169,70 +152,114 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                Sản phẩm có trong cửa hàng
+                                Thêm sản phẩm mới vào cửa hàng
                             </div>
-                            <form id="searchForm" method="GET" action="search"> 
-                                Loại sản phẩm: <select name="MaLoaiSP" onchange="submitSearchForm();">
-                                    <option value="all">-------tất cả sản phẩm-------</option>
-                                    <% for (DanhMuc d : LoaiSP) {
-                                    %>
-                                    <option 
-                                        <%=(d.getMaLoaiSP().equalsIgnoreCase(maLoaiSP)) ? "selected=\"selected\"" : ""%>
-                                        value="<%=d.getMaLoaiSP()%>"><%=d.getLoaiSP()%></option>
-                                    <%}%>
-                                </select> <br/>
-                            </form> 
-                            <br/>
-                            <div class="card-body">
-                                <% if (Pros.size() > 0) { %>
-                                <table  id="datatablesSimple">
-                                    <thead>
+                            <div>
+                                <form action="insert" method="POST">
+                                    <table>
                                         <tr>
-                                            <td>Mã sản phẩn</td>
-                                            <td>Tên Sản Phẩm</td>
-                                            <td> DVT </td>
-                                            <td>Ngày sản xuất</td>
-                                            <td>Hạn sử dụng</td>
-                                            <td>Kệ Hàng Số</td>
-                                            <td> Số lượng</td>
-                                            <td>Giá</td>
+                                            <td>Mã sản phẩm:</td>
+                                            <td><input type="text" name="masp"/> <br/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>tên sản phẩm:</td>
+                                            <td><input type="name" name="tensp" /> <br/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>DVT:</td>
+                                            <td><input type="text" name="DVT"/> <br/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ngày sản xuất:</td>
+                                            <td><input type="date" name="NgaySX"/> <br/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Hạn Sử Dụng:</td>
+                                            <td><input type="date" name="HanSD"/> <br/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Số Lượng:</td>
+                                            <td><input type="text" name="SoLuong"/> <br/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Giá Nhập:</td>
+                                            <td><input type="text" name="GiaNhap"/><br/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Giá Bán:</td>
+                                            <td><input type="text" name="GiaBan"/><br/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Kệ Hàng Số:</td>
+                                            <td><input type="text" name="KeHang"/><br/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mã Nguồn Hàng:</td>
+                                            <td><select name="maNH">
+                                                    <%for (NguonHang n : Nguon) {
+                                                    %>
+                                                    <option value="<%=n.getMaNguonHang()%>"><%=n.getTenCuaHang()%></option>
+                                                    <%}%>
+                                                    <option value="orther"> Khác </option>
+                                                </select><br/></td>
+                                        </tr>
+                                        
+                                        <div id="NH1">
+                                        <tr>
+                                            <td>Mã nguồn Hàng Mới:</td>
+                                            <td><input type="text" name="maNHM"/><br/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>tên Cửa Hàng:</td>
+                                            <td><input type="text" name="TenCuaHang"/><br/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Địa chỉ:</td>
+                                            <td><input type="text" name="DiaChi"><br/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>SĐT:</td>
+                                            <td><input type="text" name="sdt"><br></td>
+                                        </tr>
+                                        </div>
+                                        <tr>
+                                            <td>Loại Sản Phẩm:</td>
+                                            <td><select name="maloaisp">
+                                                    <% for (DanhMuc ls : loaiSP) {
+                                                    %>
+                                                    <option value="<%=ls.getMaLoaiSP()%>"><%=ls.getLoaiSP()%></option>
+                                                    <%}%>
+                                                    <option value="orther"> Khác </option>
+                                                </select> <br/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mã Loại sản phẩm mới:</td>
+                                            <td><input type="text" name="MaLoaiSPM"/><br/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Loại sản phẩm:</td>
+                                            <td><input type="text" name="LoaiSP"/><br/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="submit" value="Lưu"/></td>
                                             <td></td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        <% for (Product p : Pros) {
-                                        %>
-                                        <tr>
-                                            <td><%=p.getMasp()%></td>
-                                            <td><%=p.getTensp()%></td>
-                                            <td><%=p.getDVT()%></td>
-                                            <td><%=p.getNgaySX()%></td>
-                                            <td><%=p.getHanSD()%></td>
-                                            <td> <%=p.getKeHang()%></td>
-                                            <td><%=p.getSoLuong()%> </td>
-                                            <td> <%=p.getGiaBan()%> </td>
-                                            <td><a href="edit?id=<%=p.getMasp()%>">Edit</a> 
-                                                <a href="#" onclick="deleteProduct(<%=p.getMasp()%>);" >Delete</a></td>
-                                        </tr>
-                                        <%}%>
-                                        </tbody>
-                                </table>
-                                <%} else {%>
-                                No record to display.
-                                <%}%>
-                                <br/>
-                                
-                            </div>
-                            </main>
+                                    </table>
 
-                            <footer class="py-4 bg-light mt-auto">
-                            </footer>
+                                </form>
+                            </div>
                         </div>
-                    </div>
+                </main>
+
+                <footer class="py-4 bg-light mt-auto">
+                </footer>
             </div>
-            <script src="../js/datatables-simple-demo.js" type="text/javascript"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-            <script src="../js/scripts.js" type="text/javascript"></script>
-            <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-    </body>
+        </div>
+    </div>
+    <script src="../js/datatables-simple-demo.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="../js/scripts.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+</body>
+
 </html>
