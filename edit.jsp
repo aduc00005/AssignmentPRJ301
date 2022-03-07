@@ -1,13 +1,10 @@
 <%-- 
     Document   : edit
-    Created on : Mar 1, 2022, 9:56:14 PM
+    Created on : Mar 2, 2022, 10:48:44 PM
     Author     : Admin
 --%>
 
 <%@page import="model.NguonHang"%>
-<%@page import="model.DanhMuc"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="model.ProductForAdmin"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,14 +14,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title> Chỉnh sửa thông tin sản phẩm </title>
+        <title>Chỉnh sửa nguồn hàng</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="../CSS/styles.css" rel="stylesheet" type="text/css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+
         <%
-            ProductForAdmin p = (ProductForAdmin) request.getAttribute("product");
-            ArrayList<DanhMuc> LoaiSP = (ArrayList<DanhMuc>) request.getAttribute("LoaiSP");
-            ArrayList<NguonHang> Nguon = (ArrayList<NguonHang>) request.getAttribute("nguon");
+            NguonHang nguon = (NguonHang) request.getAttribute("nguon");
         %>
     </head>
     <body>
@@ -160,95 +156,27 @@
                                 <form action="edit" method="POST">
                                     <table>
                                         <tr>
-                                            <td>Mã sản phẩm:</td>
-                                            <td><%=p.getMasp()%> <input type="hidden" name="masp" value="<%=p.getMasp()%>"/><br/></td>
-                                        </tr>
-                                        <tr>
-                                            <td>tên sản phẩm:</td>
-                                            <td><input type="name" name="tensp" value="<%=p.getTensp()%>"/> <br/></td>
-                                        </tr>
-                                        <tr>
-                                            <td>DVT:</td>
-                                            <td><input type="text" name="DVT" value="<%=p.getDVT()%>"/> <br/></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ngày sản xuất:</td>
-                                            <td><input type="date" name="NgaySX" value="<%=p.getNgaySX()%>"/> <br/></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Hạn Sử Dụng:</td>
-                                            <td><input type="date" name="HanSD" value="<%=p.getHanSD()%>"/> <br/></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Số Lượng:</td>
-                                            <td><input type="text" name="SoLuong" value="<%=p.getSoLuong()%>"/> <br/></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Giá Nhập:</td>
-                                            <td><input type="text" name="GiaNhap" value="<%=p.getGiaNhap()%>"/><br/></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Giá Bán:</td>
-                                            <td><input type="text" name="GiaBan" value="<%=p.getGiaBan()%>"/><br/></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Kệ Hàng Số:</td>
-                                            <td><input type="text" name="KeHang" value="<%=p.getKeHang()%>"/><br/></td>
-                                        </tr>
-                                        <tr>
                                             <td>Mã Nguồn Hàng:</td>
-                                            <td><select name="maNH">
-                                                    <%for (NguonHang n : Nguon) {
-                                                    %>
-                                                    <option <%=(p.getNguon().getMaNguonHang().equals(n.getMaNguonHang()))? "selected=\"selected\"":""%>
-                                                        value="<%=n.getMaNguonHang()%>"><%=n.getTenCuaHang()%></option>
-                                                    <%}%>
-                                                    <option value="orther"> Khác </option>
-                                                </select><br/></td>
-                                        </tr>
-                                        
-                                        <div id="NH1">
-                                        <tr>
-                                            <td>Mã nguồn Hàng Mới:</td>
-                                            <td><input type="text" name="maNHM"/><br/></td>
+                                            <td><%=nguon.getMaNguonHang()%><input type="hidden" name="maNguonHang" value="<%=nguon.getMaNguonHang()%>" /><br/></td>
                                         </tr>
                                         <tr>
-                                            <td>tên Cửa Hàng:</td>
-                                            <td><input type="text" name="TenCuaHang"/><br/></td>
+                                            <td>Tên Cửa Hàng:</td>
+                                            <td><input type="text" name="tenCH" value="<%=nguon.getTenCuaHang()%>"/><br/></td>
                                         </tr>
                                         <tr>
-                                            <td>Địa chỉ:</td>
-                                            <td><input type="text" name="DiaChi"><br/></td>
+                                            <td>Địa Chỉ:</td>
+                                            <td><input type="text" name="DiaChi" value="<%=nguon.getDiaChi()%>"/><br/></td>
                                         </tr>
                                         <tr>
-                                            <td>SĐT:</td>
-                                            <td><input type="text" name="sdt"><br></td>
-                                        </tr>
-                                        </div>
-                                        <tr>
-                                            <td>Loại Sản Phẩm:</td>
-                                            <td><select name="MaLoaiSP">
-                                                    <% for (DanhMuc ls : LoaiSP) {
-                                                    %>
-                                                    <option <%=(p.getLoaiSp().getMaLoaiSP().equals(ls.getMaLoaiSP()))?"selected=\"selected\"":""%>
-                                                        value="<%=ls.getMaLoaiSP()%>"><%=ls.getLoaiSP()%></option>
-                                                    <%}%>
-                                                    <option value="orther"> Khác </option>
-                                                </select> <br/></td>
+                                            <td>Số Điện Thoại:</td>
+                                            <td><input type="text" name="sdt" value="<%=nguon.getSDT()%>" /><br/></td>
                                         </tr>
                                         <tr>
-                                            <td>Mã Loại sản phẩm mới:</td>
-                                            <td><input type="text" name="MaLoaiSPM"/><br/></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Loại sản phẩm:</td>
-                                            <td><input type="text" name="LoaiSP"/><br/></td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="submit" value="Lưu"/></td>
                                             <td></td>
+                                            <td><input type="submit" value="Lưu"/></td>
                                         </tr>
                                     </table>
+
                                 </form>
                             </div>
                         </div>

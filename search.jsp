@@ -1,12 +1,11 @@
 <%-- 
     Document   : search
-    Created on : Feb 26, 2022, 9:57:35 PM
+    Created on : Mar 2, 2022, 10:29:27 PM
     Author     : Admin
 --%>
 
+<%@page import="model.NguonHang"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="model.Product"%>
-<%@page import="model.DanhMuc"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,30 +15,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Sản phẩm</title>
+        <title>Nguồn Hàng</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="../CSS/styles.css" rel="stylesheet" type="text/css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+
         <%
-            ArrayList<DanhMuc> LoaiSP = (ArrayList<DanhMuc>) request.getAttribute("LoaiSP");
-            ArrayList<Product> Pros = (ArrayList<Product>) request.getAttribute("products");
-            String maLoaiSP = (String) request.getAttribute("MaLoaiSP");
+            ArrayList<NguonHang> nguon = (ArrayList<NguonHang>) request.getAttribute("nguon");
         %>
         <script>
-            function submitSearchForm()
+            function deleteNguon(id)
             {
-                document.getElementById("searchForm").submit();
-            }
-
-            function deleteProduct(id)
-            {
-                var result = confirm("Bạn có muốn xóa "+id+" không?");
+                var result = confirm("Bạn có muốn xóa "+ id +" không?");
                 if (result)
                 {
                     window.location.href = "delete?id=" + id;
                 }
             }
-
         </script>
     </head>
     <body>
@@ -83,11 +75,11 @@
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="search">Sản phẩm</a>
-                                    <a class="nav-link" href="insert">Thêm sản phẩm</a>
+                                    <a class="nav-link" href="../product/search">Sản phẩm</a>
+                                    <a class="nav-link" href="../product/insert">Thêm sản phẩm</a>
                                 </nav>
                             </div>
-                            
+
                             <div class="sb-sidenav-menu-heading"> Nguồn Hàng</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -113,7 +105,7 @@
                                     <a class="nav-link" href="../loaisp/insert">Thêm Loại sản phẩm</a>
                                 </nav>
                             </div>
-                            
+
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 Pages
@@ -161,68 +153,44 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Quản lý sản phẩm</h1>
+                        <h1 class="mt-4">Quản lý Nguồn Hàng</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="../index.html">Trang chủ</a></li>
-                            <li class="breadcrumb-item active">Quản lý sản phẩm</li>
+                            <li class="breadcrumb-item active">Quản lý Nguồn Hàng</li>
                         </ol>
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                Sản phẩm có trong cửa hàng
+                                Nguồn Hàng 
                             </div>
-                            <form id="searchForm" method="GET" action="search"> 
-                                Loại sản phẩm: <select name="MaLoaiSP" onchange="submitSearchForm();">
-                                    <option value="all">-------tất cả sản phẩm-------</option>
-                                    <% for (DanhMuc d : LoaiSP) {
-                                    %>
-                                    <option 
-                                        <%=(d.getMaLoaiSP().equalsIgnoreCase(maLoaiSP)) ? "selected=\"selected\"" : ""%>
-                                        value="<%=d.getMaLoaiSP()%>"><%=d.getLoaiSP()%></option>
-                                    <%}%>
-                                </select> <br/>
-                            </form> 
                             <br/>
                             <div class="card-body">
-                                <% if (Pros.size() > 0) { %>
-                                <table  id="datatablesSimple">
-                                    <thead>
-                                        <tr>
-                                            <td>Mã sản phẩn</td>
-                                            <td>Tên Sản Phẩm</td>
-                                            <td> DVT </td>
-                                            <td>Ngày sản xuất</td>
-                                            <td>Hạn sử dụng</td>
-                                            <td>Kệ Hàng Số</td>
-                                            <td> Số lượng</td>
-                                            <td>Giá</td>
-                                            <td></td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <% for (Product p : Pros) {
-                                        %>
-                                        <tr>
-                                            <td><%=p.getMasp()%></td>
-                                            <td><%=p.getTensp()%></td>
-                                            <td><%=p.getDVT()%></td>
-                                            <td><%=p.getNgaySX()%></td>
-                                            <td><%=p.getHanSD()%></td>
-                                            <td> <%=p.getKeHang()%></td>
-                                            <td><%=p.getSoLuong()%> </td>
-                                            <td> <%=p.getGiaBan()%> </td>
-                                            <td><a href="edit?id=<%=p.getMasp()%>">Edit</a> 
-                                                <a href="#" onclick="deleteProduct(<%=p.getMasp()%>);" >Delete</a></td>
-                                        </tr>
-                                        <%}%>
-                                        </tbody>
+                                <% if (nguon.size() > 0) { %>
+                                <table id="datatablesSimple">
+                                    <tr>
+                                        <td>Mã nguồn hàng</td>
+                                        <td>Tên cửa hàng</td>
+                                        <td> Địa Chỉ </td>
+                                        <td>Số điện thoại</td>
+                                        <td></td>
+                                    </tr>
+                                    <% for (NguonHang p : nguon) {
+                                    %>
+                                    <tr>
+                                        <td><%=p.getMaNguonHang()%></td>
+                                        <td><%=p.getTenCuaHang()%></td>
+                                        <td><%=p.getDiaChi()%></td>
+                                        <td><%=p.getSDT()%></td>
+                                        <td><a href="edit?id=<%=p.getMaNguonHang()%>">Edit</a> 
+                                            <a href="delete?id=<%=p.getMaNguonHang()%>" onclick="return confirm('Are you sure')" >Delete</a>
+                                        </td>
+                                    </tr>
+                                    <%}%>
                                 </table>
                                 <%} else {%>
                                 No record to display.
                                 <%}%>
-                                <br/>
-                                
-                            </div>
+                                </div>
                             </main>
 
                             <footer class="py-4 bg-light mt-auto">
