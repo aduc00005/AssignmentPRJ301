@@ -1,6 +1,6 @@
 <%-- 
     Document   : insert
-    Created on : Mar 5, 2022, 3:15:11 PM
+    Created on : Mar 5, 2022, 3:40:03 PM
     Author     : Admin
 --%>
 
@@ -13,7 +13,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Thêm Nguồn hàng</title>
+        <title>Thêm Loại sản phẩm mới</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="../CSS/styles.css" rel="stylesheet" type="text/css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
@@ -37,7 +37,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="../login.html">Đăng Xuất</a></li>
+                        <li><a class="dropdown-item" href="#!">Đăng Xuất</a></li>
                     </ul>
                 </li>
             </ul>
@@ -138,40 +138,32 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Quản lý Nguồn Hàng</h1>
+                        <h1 class="mt-4">Quản lý Các Loại sản phẩm</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="../index.html">Trang chủ</a></li>
-                            <li class="breadcrumb-item active">Quản lý Nguồn Hàng</li>
+                            <li class="breadcrumb-item active">Quản lý Các Loại sản phẩm</li>
                         </ol>
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                Thêm Nguồn Nguồn Hàng Mới Vào Cửa Hàng 
+                                Thêm Loại Sản Phẩm Mới Vào Cửa Hàng 
                             </div>
                             <br/>
                             <div class="card-body">
                                 <form action="insert" method="POST">
                                     <table>
                                         <tr>
-                                            <td>Mã Nguồn Hàng:</td>
-                                            <td><input type="text" name="MaNH"/><br/></td>
+                                            <td>Mã Loại sản phẩm:</td>
+                                            <td><input type="text" name="MaLoaiSP"/><br/></td>
                                         </tr>
                                         <tr>
-                                            <td>Tên cửa hàng:</td>
-                                            <td><input type="text" name="TenCH"/><br/></td>
+                                            <td>Tên loại sản phẩm :</td>
+                                            <td><input type="text" name="LoaiSP"/><br/></td>
                                         </tr>
                                         <tr>
-                                            <td>Địa Chỉ:</td>
-                                            <td><input type="text" name="DiaChi"/><br/></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Số điện thoại:</td>
-                                            <td><input type="text" name="sdt"/><br/></td>
-                                        </tr>
-                                        <tr>
+                                            <td></td>
                                             <td><input type="submit" value="Lưu"/></td>
                                         </tr>
-                                    
                                     </table>
                                 </form>
                             </div>
@@ -186,5 +178,5 @@
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
             <script src="../js/scripts.js" type="text/javascript"></script>
             <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-    </body>
+
 </html>

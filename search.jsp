@@ -1,10 +1,10 @@
 <%-- 
     Document   : search
-    Created on : Mar 2, 2022, 10:29:27 PM
+    Created on : Mar 5, 2022, 3:35:03 PM
     Author     : Admin
 --%>
 
-<%@page import="model.NguonHang"%>
+<%@page import="model.DanhMuc"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -15,24 +15,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Nguồn Hàng</title>
+        <title>Các Loại sản phẩm của cửa hàng</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="../CSS/styles.css" rel="stylesheet" type="text/css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
 
         <%
-            ArrayList<NguonHang> nguon = (ArrayList<NguonHang>) request.getAttribute("nguon");
+            ArrayList<DanhMuc> loaisp = (ArrayList<DanhMuc>) request.getAttribute("loaisp");
         %>
-        <script>
-            function deleteNguon(id)
-            {
-                var result = confirm("Bạn có muốn xóa "+ id +" không?");
-                if (result)
-                {
-                    window.location.href = "delete?id=" + id;
-                }
-            }
-        </script>
     </head>
     <body>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -153,36 +143,32 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Quản lý Nguồn Hàng</h1>
+                        <h1 class="mt-4">Quản lý Các Loại Sản Phẩm</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="../index.html">Trang chủ</a></li>
-                            <li class="breadcrumb-item active">Quản lý Nguồn Hàng</li>
+                            <li class="breadcrumb-item active">Quản lý Các Loại Sản Phẩm</li>
                         </ol>
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                Nguồn Hàng 
+                                Các Loại Sản Phẩm 
                             </div>
                             <br/>
                             <div class="card-body">
-                                <% if (nguon.size() > 0) { %>
+                                <% if (loaisp.size() > 0) { %>
                                 <table id="datatablesSimple">
                                     <tr>
-                                        <td>Mã nguồn hàng</td>
-                                        <td>Tên cửa hàng</td>
-                                        <td> Địa Chỉ </td>
-                                        <td>Số điện thoại</td>
+                                        <td>Mã Loại sản phẩm</td>
+                                        <td>Tên Loại sản phẩm</td>
                                         <td></td>
                                     </tr>
-                                    <% for (NguonHang p : nguon) {
+                                    <% for (DanhMuc d : loaisp) {
                                     %>
                                     <tr>
-                                        <td><%=p.getMaNguonHang()%></td>
-                                        <td><%=p.getTenCuaHang()%></td>
-                                        <td><%=p.getDiaChi()%></td>
-                                        <td><%=p.getSDT()%></td>
-                                        <td><a href="edit?id=<%=p.getMaNguonHang()%>">Edit</a> 
-                                            <a href="delete?id=<%=p.getMaNguonHang()%>" onclick="return confirm('Are you sure')" >Delete</a>
+                                        <td><%=d.getMaLoaiSP()%></td>
+                                        <td><%=d.getLoaiSP()%></td>
+                                        <td><a href="edit?id=<%=d.getMaLoaiSP()%>">Edit</a> 
+                                            <a href="delete?id=<%=d.getMaLoaiSP()%>" onclick="return confirm('Bạn có muốn xóa'+<%=d.getLoaiSP()%> +' không?')" >Delete</a>
                                         </td>
                                     </tr>
                                     <%}%>
@@ -190,7 +176,7 @@
                                 <%} else {%>
                                 No record to display.
                                 <%}%>
-                                </div>
+                            </div>
                             </main>
 
                             <footer class="py-4 bg-light mt-auto">

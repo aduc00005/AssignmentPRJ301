@@ -1,10 +1,10 @@
 <%-- 
     Document   : edit
-    Created on : Mar 2, 2022, 10:48:44 PM
+    Created on : Mar 5, 2022, 3:52:45 PM
     Author     : Admin
 --%>
 
-<%@page import="model.NguonHang"%>
+<%@page import="model.DanhMuc"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,13 +14,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Chỉnh sửa nguồn hàng</title>
+        <title>Chỉnh sửa loại sản phẩm</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="../CSS/styles.css" rel="stylesheet" type="text/css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
 
         <%
-            NguonHang nguon = (NguonHang) request.getAttribute("nguon");
+            DanhMuc loaisp = (DanhMuc) request.getAttribute("loaisp");
         %>
     </head>
     <body>
@@ -142,41 +142,21 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Quản lý sản phẩm</h1>
+                        <h1 class="mt-4">Quản lý Các Loại Sản Phẩm</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="../index.html">Trang chủ</a></li>
-                            <li class="breadcrumb-item active">Quản lý sản phẩm</li>
+                            <li class="breadcrumb-item active">Quản lý Các Loại Sản Phẩm</li>
                         </ol>
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                Chỉnh sửa thông tin sản phẩm
+                                Chỉnh sửa Loại sản phẩm
                             </div>
                             <div>
                                 <form action="edit" method="POST">
-                                    <table>
-                                        <tr>
-                                            <td>Mã Nguồn Hàng:</td>
-                                            <td><%=nguon.getMaNguonHang()%><input type="hidden" name="maNguonHang" value="<%=nguon.getMaNguonHang()%>" /><br/></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tên Cửa Hàng:</td>
-                                            <td><input type="text" name="tenCH" value="<%=nguon.getTenCuaHang()%>"/><br/></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Địa Chỉ:</td>
-                                            <td><input type="text" name="DiaChi" value="<%=nguon.getDiaChi()%>"/><br/></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Số Điện Thoại:</td>
-                                            <td><input type="text" name="sdt" value="<%=nguon.getSDT()%>" /><br/></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td><input type="submit" value="Lưu"/></td>
-                                        </tr>
-                                    </table>
-
+                                    Mã Loại sản phẩm: <%=loaisp.getMaLoaiSP()%><input type="hidden" name="maloaisp" value="<%=loaisp.getMaLoaiSP()%>" /><br/>
+                                    Tên loại sản phẩm: <input type="text" name="loaisp" value="<%=loaisp.getLoaiSP()%>" style="border: 0px 1px "/><br/>
+                                    <input type="submit" value="Lưu"/>
                                 </form>
                             </div>
                         </div>
