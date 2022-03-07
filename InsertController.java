@@ -3,15 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Product.Controller;
+package NguonController;
 
 import Controller.BaseAuthenticationController;
 import dal.DanhMucDBContext;
 import dal.NguonHangDBContext;
-import dal.ProductDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.DanhMuc;
 import model.NguonHang;
-import model.ProductForAdmin;
 
 /**
  *
@@ -39,14 +36,7 @@ public class InsertController extends BaseAuthenticationController {
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        DanhMucDBContext DB = new DanhMucDBContext();
-        ArrayList<DanhMuc> list = DB.getLoaiSP();
-        request.setAttribute("LoaiSP", list);
-        NguonHangDBContext NguonDB = new NguonHangDBContext();
-        ArrayList<NguonHang> NHList = NguonDB.getNguon();
-        request.setAttribute("Nguon", NHList);
-        request.getRequestDispatcher("../view/product/insert.jsp").forward(request, response);
+        request.getRequestDispatcher("../view/nguon/insert.jsp").forward(request, response);
     }
 
     /**
@@ -62,118 +52,29 @@ public class InsertController extends BaseAuthenticationController {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
-        
-        String raw_masp = request.getParameter("masp");
-        String raw_tensp = request.getParameter("tensp");
-        String raw_DVT = request.getParameter("DVT");
-        String raw_NgaySX = request.getParameter("NgaySX");
-        String raw_HanSD = request.getParameter("HanSD");
-        String raw_SoLuong = request.getParameter("SoLuong");
-        String raw_GiaNhap = request.getParameter("GiaNhap");
-        String raw_GiaBan = request.getParameter("GiaBan");
-        String raw_KeHang = request.getParameter("KeHang");
-        // Nguon Hang
-        String raw_MaNguon = (request.getParameter("maNH").equalsIgnoreCase("orther"))? request.getParameter("maNHM") : request.getParameter("maNH");
-                 
-        // Neu la nguon hang moi
-        String raw_TenCuaHang = null;
-        String raw_DiaChi = null;
-        String raw_SDT = null;
 
-        if (request.getParameter("maNH").equalsIgnoreCase("orther")) {
+        String raw_MaNH = request.getParameter("MaNH");
+        String tenCH = request.getParameter("TenCH");
+        String diaChi = request.getParameter("DiaChi");
+        String sdt = request.getParameter("sdt");
 
-            raw_TenCuaHang = request.getParameter("TenCuaHang");
-            raw_DiaChi = request.getParameter("DiaChi");
-            raw_SDT = request.getParameter("sdt");
-
-        }
-        //Loai sp
-        String raw_MaLoaiSP = (request.getParameter("maloaisp").equalsIgnoreCase("orther"))? request.getParameter("MaLoaiSPM") : request.getParameter("maloaisp");
-                
-        //neu  la loai sp moi
-        String raw_LoaiSP = null;
-        if (request.getParameter("maloaisp").equalsIgnoreCase("orther")) {
-
-            raw_LoaiSP = request.getParameter("LoaiSP");
-
-        }
-
-        ProductDBContext db = new ProductDBContext();
-
-        
-        if (raw_masp==null||raw_masp.length()==0) {
+        NguonHangDBContext db = new NguonHangDBContext();
+        if (raw_MaNH ==null||raw_MaNH.length()==0) {
             response.sendRedirect("../500.html");
         }else{
-            int masp = Integer.parseInt(raw_masp);
-        //check dupicate masp
-        if (db.checkDupicateMasp(masp)) {
-            response.sendRedirect("../500.html");
-        } else {
-            String tensp = raw_tensp;
-            String DVT = raw_DVT;
-            Date NgaySX = Date.valueOf(raw_NgaySX);
-            Date HanSD = Date.valueOf(raw_HanSD);
-            int SoLuong = Integer.parseInt(raw_SoLuong);
-            int GiaNhap = Integer.parseInt(raw_GiaNhap);
-            int GiaBan = Integer.parseInt(raw_GiaBan);
-            int KeHang = Integer.parseInt(raw_KeHang);
-            String MaLoaiSP = raw_MaLoaiSP;
-            String MaNH = raw_MaNguon;
-
-            DanhMuc d = new DanhMuc();
-            String LoaiSPMoi = null;
-            if (request.getParameter("maloaisp").equalsIgnoreCase("orther")) {
-                String maLoaiSPMoi = request.getParameter("MaLoaiSPM");
-                LoaiSPMoi = raw_LoaiSP;
-                d.setMaLoaiSP(maLoaiSPMoi);
-                d.setLoaiSP(LoaiSPMoi);
-                DanhMucDBContext DanhMucDB = new DanhMucDBContext();
-                DanhMucDB.insertDanhMucSP(d);
+            if (db.CheckDupMaNguon(raw_MaNH)) {
+                response.sendRedirect("../500.html");
+            } else {
+                String MaNh = raw_MaNH;
+                NguonHang n = new NguonHang();
+                n.setMaNguonHang(MaNh);
+                n.setTenCuaHang(tenCH);
+                n.setDiaChi(diaChi);
+                n.setSDT(sdt);
+                db.insertNguonHang(n);
+                response.sendRedirect("search");
             }
-            d.setMaLoaiSP(MaLoaiSP);
-
-            
-            NguonHang n = new NguonHang();
-            // Neu la nguon hang moi
-            String TenCuaHang = null;
-            String DiaChi = null;
-            String SDT = null;
-            if (request.getParameter("maNH").equalsIgnoreCase("orther")) {
-                String MaNguonHangMoi = request.getParameter("maNHM");
-                TenCuaHang = raw_TenCuaHang;
-                DiaChi = raw_DiaChi;
-                SDT = raw_SDT;
-                n.setMaNguonHang(MaNguonHangMoi);
-                n.setTenCuaHang(TenCuaHang);
-                n.setDiaChi(DiaChi);
-                n.setSDT(SDT);
-                NguonHangDBContext NguonDB = new NguonHangDBContext();
-                NguonDB.insertNguonHang(n);
-                
-            }
-            n.setMaNguonHang(MaNH);
-            
-
-            // set product to insert
-            ProductForAdmin p = new ProductForAdmin();
-            p.setMasp(masp);
-            p.setTensp(tensp);
-            p.setDVT(DVT);
-            p.setNgaySX(NgaySX);
-            p.setHanSD(HanSD);
-            p.setSoLuong(SoLuong);
-            p.setGiaNhap(GiaNhap);
-            p.setGiaBan(GiaBan);
-            p.setKeHang(KeHang);
-            p.setLoaiSp(d);
-            p.setNguon(n);
-
-            db.insertProduct(p);
-
-            response.sendRedirect("search");
         }
-        }
-
     }
 
     /**

@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Product.Controller;
+package NguonController;
 
 import dal.DanhMucDBContext;
+import dal.NguonHangDBContext;
 import dal.ProductDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,8 +15,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.DanhMuc;
-import model.Product;
+import model.NguonHang;
+
 
 /**
  *
@@ -34,16 +35,11 @@ public class SearchController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DanhMucDBContext DMDB = new DanhMucDBContext();
-        ArrayList<DanhMuc> ListDM = DMDB.getLoaiSP();
-        request.setAttribute("LoaiSP", ListDM);
-        String maLoaiSP = request.getParameter("MaLoaiSP");
-        maLoaiSP = (maLoaiSP == null || maLoaiSP.length()==0 )? "all": maLoaiSP;
-        ProductDBContext productDB = new ProductDBContext();
-        ArrayList<Product>  pros = productDB.getProductByDanhMuc(maLoaiSP);
-        request.setAttribute("products", pros);
-        request.setAttribute("MaLoaiSP", maLoaiSP);
-        request.getRequestDispatcher("../view/product/search.jsp").forward(request, response);
+        
+        NguonHangDBContext NguonDB = new NguonHangDBContext();
+        ArrayList<NguonHang>  nguon = NguonDB.getNguon();
+        request.setAttribute("nguon", nguon);
+        request.getRequestDispatcher("../view/nguon/search.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

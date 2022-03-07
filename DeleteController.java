@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Product.Controller;
+package NguonController;
 
 import Controller.BaseAuthenticationController;
 import dal.ProductDBContext;
+import dal.NguonHangDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -31,9 +32,9 @@ public class DeleteController extends BaseAuthenticationController {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        ProductDBContext db = new ProductDBContext();
-        db.deleteStudent(id);
+        String MaNguon = request.getParameter("id");
+        NguonHangDBContext db = new NguonHangDBContext();
+        db.deleteSource(MaNguon);
         response.sendRedirect("search");
     }
 
