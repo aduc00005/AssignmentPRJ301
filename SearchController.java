@@ -5,20 +5,23 @@
  */
 package Product.Controller;
 
-import Controller.BaseAuthenticationController;
+import dal.DanhMucDBContext;
 import dal.ProductDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.DanhMuc;
+import model.Product;
 
 /**
  *
  * @author Admin
  */
-public class DeleteController extends BaseAuthenticationController {
+public class SearchController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,10 +34,16 @@ public class DeleteController extends BaseAuthenticationController {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        ProductDBContext db = new ProductDBContext();
-        db.deleteStudent(id);
-        response.sendRedirect("search");
+        DanhMucDBContext DMDB = new DanhMucDBContext();
+        ArrayList<DanhMuc> ListDM = DMDB.getLoaiSP();
+        request.setAttribute("LoaiSP", ListDM);
+        String maLoaiSP = request.getParameter("MaLoaiSP");
+        maLoaiSP = (maLoaiSP == null || maLoaiSP.length()==0 )? "all": maLoaiSP;
+        ProductDBContext productDB = new ProductDBContext();
+        ArrayList<Product>  pros = productDB.getProductByDanhMuc(maLoaiSP);
+        request.setAttribute("products", pros);
+        request.setAttribute("MaLoaiSP", maLoaiSP);
+        request.getRequestDispatcher("../view/product/search.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -47,7 +56,7 @@ public class DeleteController extends BaseAuthenticationController {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void processGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -61,7 +70,7 @@ public class DeleteController extends BaseAuthenticationController {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void processPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }

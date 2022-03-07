@@ -5,6 +5,7 @@
  */
 package Product.Controller;
 
+import Controller.BaseAuthenticationController;
 import dal.DanhMucDBContext;
 import dal.NguonHangDBContext;
 import dal.ProductDBContext;
@@ -25,7 +26,7 @@ import model.ProductForAdmin;
  *
  * @author Admin
  */
-public class EditController extends HttpServlet {
+public class EditController extends BaseAuthenticationController {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -37,7 +38,7 @@ public class EditController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
         
@@ -67,7 +68,7 @@ public class EditController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");

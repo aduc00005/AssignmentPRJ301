@@ -5,6 +5,7 @@
  */
 package Product.Controller;
 
+import Controller.BaseAuthenticationController;
 import dal.DanhMucDBContext;
 import dal.NguonHangDBContext;
 import dal.ProductDBContext;
@@ -24,7 +25,7 @@ import model.ProductForAdmin;
  *
  * @author Admin
  */
-public class InsertController extends HttpServlet {
+public class InsertController extends BaseAuthenticationController {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -36,7 +37,7 @@ public class InsertController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
         DanhMucDBContext DB = new DanhMucDBContext();
@@ -57,7 +58,7 @@ public class InsertController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
@@ -99,10 +100,14 @@ public class InsertController extends HttpServlet {
 
         ProductDBContext db = new ProductDBContext();
 
-        int masp = Integer.parseInt(raw_masp);
+        
+        if (raw_masp==null||raw_masp.length()==0) {
+            response.sendRedirect("../500.html");
+        }else{
+            int masp = Integer.parseInt(raw_masp);
         //check dupicate masp
         if (db.checkDupicateMasp(masp)) {
-            response.getWriter().println("Product have ID: " + masp + " is existed in store!");
+            response.sendRedirect("../500.html");
         } else {
             String tensp = raw_tensp;
             String DVT = raw_DVT;
@@ -166,6 +171,7 @@ public class InsertController extends HttpServlet {
             db.insertProduct(p);
 
             response.sendRedirect("search");
+        }
         }
 
     }
