@@ -3,26 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package NguonController;
+package DanhMucDBController;
 
 import Controller.BaseAuthenticationController;
 import dal.DanhMucDBContext;
-import dal.NguonHangDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.DanhMuc;
-import model.NguonHang;
 
 /**
  *
  * @author Admin
  */
 public class InsertController extends BaseAuthenticationController {
+
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -36,7 +35,7 @@ public class InsertController extends BaseAuthenticationController {
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("../view/nguon/insert.jsp").forward(request, response);
+        request.getRequestDispatcher("../view/danhmuc/insert.jsp").forward(request, response);
     }
 
     /**
@@ -52,28 +51,20 @@ public class InsertController extends BaseAuthenticationController {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
-
-        String raw_MaNH = request.getParameter("MaNH");
-        String tenCH = request.getParameter("TenCH");
-        String diaChi = request.getParameter("DiaChi");
-        String sdt = request.getParameter("sdt");
-
-        NguonHangDBContext db = new NguonHangDBContext();
-        if (raw_MaNH ==null||raw_MaNH.length()==0) {
-            response.sendRedirect("../500.html");
+        
+        String raw_MaLoaiSp = request.getParameter("MaLoaiSP");
+        String loaisp = request.getParameter("LoaiSP");
+        
+        DanhMucDBContext db = new DanhMucDBContext();
+        if (db.checkDupMaLoaiSP(raw_MaLoaiSp)) {
+            response.getWriter().println("Nguồn loại sản này đã có sẵn");
         }else{
-            if (db.CheckDupMaNguon(raw_MaNH)) {
-                response.sendRedirect("../500.html");
-            } else {
-                String MaNh = raw_MaNH;
-                NguonHang n = new NguonHang();
-                n.setMaNguonHang(MaNh);
-                n.setTenCuaHang(tenCH);
-                n.setDiaChi(diaChi);
-                n.setSDT(sdt);
-                db.insertNguonHang(n);
-                response.sendRedirect("search");
-            }
+            String maLoaiSP = raw_MaLoaiSp;
+            DanhMuc d = new DanhMuc();
+            d.setMaLoaiSP(maLoaiSP);
+            d.setLoaiSP(loaisp);
+            db.insertDanhMucSP(d);
+            response.sendRedirect("search");
         }
     }
 

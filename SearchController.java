@@ -3,11 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package NguonController;
+package DanhMucDBController;
 
 import dal.DanhMucDBContext;
-import dal.NguonHangDBContext;
-import dal.ProductDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -15,8 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.NguonHang;
-
+import model.DanhMuc;
 
 /**
  *
@@ -35,11 +32,10 @@ public class SearchController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        NguonHangDBContext NguonDB = new NguonHangDBContext();
-        ArrayList<NguonHang>  nguon = NguonDB.getNguon();
-        request.setAttribute("nguon", nguon);
-        request.getRequestDispatcher("../view/nguon/search.jsp").forward(request, response);
+        DanhMucDBContext db = new DanhMucDBContext();
+        ArrayList<DanhMuc> loaisp = db.getLoaiSP();
+        request.setAttribute("loaisp", loaisp);
+        request.getRequestDispatcher("../view/danhmuc/search.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

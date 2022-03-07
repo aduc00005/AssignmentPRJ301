@@ -3,22 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package NguonController;
+package DanhMucDBController;
 
 import Controller.BaseAuthenticationController;
 import dal.DanhMucDBContext;
 import dal.NguonHangDBContext;
-import dal.ProductDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.DanhMuc;
 import model.NguonHang;
-import model.ProductForAdmin;
 
 /**
  *
@@ -26,7 +23,7 @@ import model.ProductForAdmin;
  */
 public class EditController extends BaseAuthenticationController {
 
-
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -41,13 +38,11 @@ public class EditController extends BaseAuthenticationController {
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        
-        String MaNguonHang = request.getParameter("id");
-        NguonHangDBContext db = new NguonHangDBContext();
-        NguonHang nguon = db.getNguonByID(MaNguonHang);
-        
-        request.setAttribute("nguon", nguon);
-        request.getRequestDispatcher("../view/nguon/edit.jsp").forward(request, response);
+        String MaLoaiSP = request.getParameter("id");
+        DanhMucDBContext db = new DanhMucDBContext();
+        DanhMuc loaisp = db.getLoaiSPByID(MaLoaiSP);
+        request.setAttribute("loaisp", loaisp);
+        request.getRequestDispatcher("../view/danhmuc/edit.jsp").forward(request, response);
     }
 
     /**
@@ -64,20 +59,15 @@ public class EditController extends BaseAuthenticationController {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
         
-        String raw_MaNguonHang = request.getParameter("maNguonHang");
-        String TenCH = request.getParameter("tenCH");
-        String DiaChi = request.getParameter("DiaChi");
-        String sdt = request.getParameter("sdt");
+        String maloaiSP = request.getParameter("maloaisp");
+        String loaiSP = request.getParameter("loaisp");
         
-        NguonHangDBContext db = new NguonHangDBContext();
-            String MaNH = raw_MaNguonHang;
-            NguonHang n = new NguonHang();
-            n.setMaNguonHang(MaNH);
-            n.setTenCuaHang(TenCH);
-            n.setDiaChi(DiaChi);
-            n.setSDT(sdt);
-            db.UpdateNguon(n);
-            response.sendRedirect("search");
+        DanhMuc l = new DanhMuc();
+        l.setMaLoaiSP(maloaiSP);
+        l.setLoaiSP(loaiSP);
+        DanhMucDBContext db = new DanhMucDBContext();
+        db.UpdateDanhMuc(l);
+        response.sendRedirect("search");
     }
 
     /**
