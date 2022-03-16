@@ -32,4 +32,16 @@ and open the template in the editor.
     border: none;
     border-bottom-style: dotted;
 }
-
+.left{
+   background-color: #ccffff; 
+   padding: 10px 10px;
+   text-align: center;
+   border: 1px #000 dashed;
+   border-radius: 10px
+}
+.tableshow{
+    border: 1px #000 outset;
+}
+.tableshow tr{
+    border-bottom: 1px #000 solid; 
+}

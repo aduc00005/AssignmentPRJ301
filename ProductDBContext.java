@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.DanhMuc;
@@ -72,7 +73,7 @@ public class ProductDBContext extends DBContext{
     public ArrayList<Product> getProductByDanhMuc(String LoaiSP){
         ArrayList<Product> pros = new ArrayList<>();
         try {
-            String sql ="SELECT MaSP,TenSP,DVT,NgaySX,HanSD,SoLuong,GiaBan,KeHang \n" +
+            String sql ="SELECT MaSP,TenSP,DVT,NgaySX,HanSD,SoLuong,GiaBan,KeHang,NgayNhap \n" +
                     "FROM DanhMuc as d inner join SanPham as s on d.MaLoaiSP=s.MaLoaiSP\n" ;
             if (!LoaiSP.equalsIgnoreCase("all")) {
                 sql += "WHERE d.MaLoaiSP= ?";
@@ -92,6 +93,7 @@ public class ProductDBContext extends DBContext{
                 p.setSoLuong(rs.getInt("SoLuong"));
                 p.setGiaBan(rs.getInt("GiaBan"));
                 p.setKeHang(rs.getInt("KeHang"));
+                p.setNgayNhapKho(rs.getDate("NgayNhap"));
                 pros.add(p);
             }
         } catch (SQLException ex) {
@@ -103,7 +105,7 @@ public class ProductDBContext extends DBContext{
     public ArrayList<Product> getSanPham(){
         ArrayList<Product> pros = new ArrayList<>();
         try {
-            String sql ="SELECT MaSP,TenSP,DVT,NgaySX,HanSD,SoLuong,GiaBan,KeHang \n" +
+            String sql ="SELECT MaSP,TenSP,DVT,NgaySX,HanSD,SoLuong,GiaBan,KeHang,NgayNhap \n" +
                     "FROM DanhMuc as d inner join SanPham as s on d.MaLoaiSP=s.MaLoaiSP\n" ;
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
@@ -117,6 +119,7 @@ public class ProductDBContext extends DBContext{
                 p.setSoLuong(rs.getInt("SoLuong"));
                 p.setGiaBan(rs.getInt("GiaBan"));
                 p.setKeHang(rs.getInt("KeHang"));
+                p.setNgayNhapKho(rs.getDate("NgayNhap"));
                 pros.add(p);
             }
         } catch (SQLException ex) {
@@ -124,9 +127,113 @@ public class ProductDBContext extends DBContext{
         }
         return pros;
     }
+    
+    public ArrayList<Product> getSanPhamHaveMaxQuantity(){
+        ArrayList<Product> pros = new ArrayList<>();
+        try {
+            String sql ="SELECT MaSP,TenSP,DVT,SoLuong,NgaySX,HanSD,KeHang,GiaBan,NgayNhap FROM SanPham\n" +
+                        "	where SoLuong >= all (select SoLuong from SanPham)" ;
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {                
+                Product p = new Product();
+                p.setMasp(rs.getInt("MaSP"));
+                p.setTensp(rs.getString("TenSP"));
+                p.setDVT(rs.getString("DVT"));
+                p.setNgaySX(rs.getDate("NgaySX"));
+                p.setHanSD(rs.getDate("HanSD"));
+                p.setSoLuong(rs.getInt("SoLuong"));
+                p.setGiaBan(rs.getInt("GiaBan"));
+                p.setKeHang(rs.getInt("KeHang"));
+                p.setNgayNhapKho(rs.getDate("NgayNhap"));
+                pros.add(p);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pros;
+    }
+    
+    public ArrayList<Product> getSanPhamHaveLowQuantity(){
+        ArrayList<Product> pros = new ArrayList<>();
+        try {
+            String sql ="SELECT MaSP,TenSP,DVT,SoLuong,NgaySX,HanSD,KeHang,GiaBan,NgayNhap FROM SanPham\n" +
+                        "	where SoLuong <= 10" ;
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {                
+                Product p = new Product();
+                p.setMasp(rs.getInt("MaSP"));
+                p.setTensp(rs.getString("TenSP"));
+                p.setDVT(rs.getString("DVT"));
+                p.setNgaySX(rs.getDate("NgaySX"));
+                p.setHanSD(rs.getDate("HanSD"));
+                p.setSoLuong(rs.getInt("SoLuong"));
+                p.setGiaBan(rs.getInt("GiaBan"));
+                p.setKeHang(rs.getInt("KeHang"));
+                p.setNgayNhapKho(rs.getDate("NgayNhap"));
+                pros.add(p);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pros;
+    }
+    public ArrayList<Product> getSanPhamHHSD(){
+        ArrayList<Product> pros = new ArrayList<>();
+        try {
+            String sql ="SELECT MaSP,TenSP,DVT,SoLuong,NgaySX,HanSD,KeHang,GiaBan,NgayNhap FROM SanPham\n" +
+                        "where HanSD < GETDATE()";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {                
+                Product p = new Product();
+                p.setMasp(rs.getInt("MaSP"));
+                p.setTensp(rs.getString("TenSP"));
+                p.setDVT(rs.getString("DVT"));
+                p.setNgaySX(rs.getDate("NgaySX"));
+                p.setHanSD(rs.getDate("HanSD"));
+                p.setSoLuong(rs.getInt("SoLuong"));
+                p.setGiaBan(rs.getInt("GiaBan"));
+                p.setKeHang(rs.getInt("KeHang"));
+                p.setNgayNhapKho(rs.getDate("NgayNhap"));
+                pros.add(p);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pros;
+    }
+    
+    public ArrayList<Product> getSanPhamTKLN(){
+        ArrayList<Product> pros = new ArrayList<>();
+        try {
+            String sql ="SELECT MaSP,TenSP,DVT,SoLuong,NgaySX,HanSD,KeHang,GiaBan,NgayNhap FROM SanPham\n" +
+                        "where NgayNhap <= (select MIN(NgayNhap) from SanPham)";    
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {                
+                Product p = new Product();
+                p.setMasp(rs.getInt("MaSP"));
+                p.setTensp(rs.getString("TenSP"));
+                p.setDVT(rs.getString("DVT"));
+                p.setNgaySX(rs.getDate("NgaySX"));
+                p.setHanSD(rs.getDate("HanSD"));
+                p.setSoLuong(rs.getInt("SoLuong"));
+                p.setGiaBan(rs.getInt("GiaBan"));
+                p.setKeHang(rs.getInt("KeHang"));
+                p.setNgayNhapKho(rs.getDate("NgayNhap"));
+                pros.add(p);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pros;
+    }
+    
     public ProductForAdmin getProductByID(int masp){
         try {
-            String sql ="SELECT MaSP,TenSP,DVT,NgaySX,HanSD,SoLuong,GiaBan,GiaNhap,KeHang,n.MaNguonHang,n.TenCuaHang,n.DiaChi,n.NSDT,d.MaLoaiSP,d.LoaiSP \n" +
+            String sql ="SELECT MaSP,TenSP,DVT,NgaySX,HanSD,SoLuong,GiaBan,GiaNhap,KeHang,NgayNhap,n.MaNguonHang,n.TenCuaHang,n.DiaChi,n.NSDT,d.MaLoaiSP,d.LoaiSP \n" +
                             "FROM SanPham as s inner join DanhMuc as d on s.MaLoaiSP=d.MaLoaiSP\n" +
                             "join NguonHang as n on s.MaNguonHang=n.MaNguonHang\n" +
                         "	WHERE MaSP= ?";
@@ -144,6 +251,7 @@ public class ProductDBContext extends DBContext{
                 p.setGiaNhap(rs.getInt("GiaNhap"));
                 p.setGiaBan(rs.getInt("GiaBan"));
                 p.setKeHang(rs.getInt("KeHang"));
+                p.setNgayNhapKho(rs.getDate("NgayNhap"));
                 NguonHang n = new NguonHang();
                 n.setMaNguonHang(rs.getString("MaNguonHang"));
                 n.setTenCuaHang(rs.getString("TenCuaHang"));
@@ -187,9 +295,11 @@ public class ProductDBContext extends DBContext{
                             "           ,[GiaBan]\n" +
                             "           ,[KeHang]\n" +
                             "           ,[MaNguonHang]\n" +
-                            "           ,[MaLoaiSP])\n" +
+                            "           ,[MaLoaiSP]\n"+
+                            "           ,[NgayNhap])\n" +
                     " VALUES\n" +
                             "           (?\n" +
+                            "           ,?\n" +
                             "           ,?\n" +
                             "           ,?\n" +
                             "           ,?\n" +
@@ -214,6 +324,7 @@ public class ProductDBContext extends DBContext{
             stm.setInt(9,p.getKeHang() );
             stm.setString(10,p.getNguon().getMaNguonHang());
             stm.setString(11, p.getLoaiSp().getMaLoaiSP());
+            stm.setDate(12, p.getNgayNhapKho());
             stm.executeUpdate(); 
         } catch (SQLException ex) {
             Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -286,6 +397,7 @@ public class ProductDBContext extends DBContext{
                         "      ,[KeHang] = ?\n" +
                         "      ,[MaNguonHang] = ?\n" +
                         "      ,[MaLoaiSP] = ?\n" +
+                        "      ,[NgayNhap] = ?\n" +
                         " WHERE MaSP= ?";
         PreparedStatement stm = null;
         try {
@@ -300,7 +412,8 @@ public class ProductDBContext extends DBContext{
             stm.setInt(8, p.getKeHang());
             stm.setString(9, p.getNguon().getMaNguonHang());
             stm.setString(10, p.getLoaiSp().getMaLoaiSP());
-            stm.setInt(11, p.getMasp());
+            stm.setDate(11, p.getNgayNhapKho());
+            stm.setInt(12, p.getMasp());
             stm.executeUpdate(); 
         } catch (SQLException ex) {
             Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -325,5 +438,24 @@ public class ProductDBContext extends DBContext{
             }
         }
     }
+
+
+    public boolean checkDate(String raw_NgaySX, String raw_HanSD,String raw_NgayNhap) {
+        Date ngaySX=java.sql.Date.valueOf(raw_NgaySX);
+        Date HSD = java.sql.Date.valueOf(raw_HanSD);
+        Date NgayNhap = java.sql.Date.valueOf(raw_NgayNhap);
+        long millis=System.currentTimeMillis();  
+        java.sql.Date date = new java.sql.Date(millis);
+        if (ngaySX.compareTo(HSD)<0&&HSD.compareTo(date)>=0
+                &&NgayNhap.compareTo(date)<=0&&HSD.compareTo(NgayNhap)>=0
+                && ngaySX.compareTo(NgayNhap)<=0) {
+            return true;
+        }else{
+            return false;
+        }
+        
+    }
+
+    
 
 }
