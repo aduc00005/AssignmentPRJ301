@@ -4,6 +4,7 @@
     Author     : Admin
 --%>
 
+<%@page import="model.Data"%>
 <%@page import="model.Product"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -20,11 +21,13 @@
         <link href="../CSS/styles.css" rel="stylesheet" type="text/css"/>
         <link href="../CSS/pagger.css" rel="stylesheet" type="text/css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <%
             ArrayList<Product> productMaxQ = (ArrayList<Product>) request.getAttribute("productMaxQ");
             ArrayList<Product> productLowQ = (ArrayList<Product>) request.getAttribute("productLowQ");
             ArrayList<Product> productHHSD = (ArrayList<Product>) request.getAttribute("productHHSD");
             ArrayList<Product> productTKLN = (ArrayList<Product>) request.getAttribute("productTKLN");
+            ArrayList<Data> dat = (ArrayList<Data>) request.getAttribute("data");
         %>
     </head>
     <body class="sb-nav-fixed">
@@ -34,7 +37,7 @@
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
-            <form action="action/search" class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <form action="../action/search" class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 <div class="input-group">
                     <input name="text"  class="form-control" type="text" placeholder="Tìm kiếm..." aria-label="Tìm kiếm..." aria-describedby="btnNavbarSearch" />
                     <button class="btn btn-primary" id="btnNavbarSearch" type="submit"><i class="fas fa-search"></i></button>
@@ -121,15 +124,6 @@
                                     </div>
                                 </nav>
                             </div>
-                            <div class="sb-sidenav-menu-heading">Addons</div>
-                            <a class="nav-link" href="../charts.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                                Charts
-                            </a>
-                            <a class="nav-link" href="../tables.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Tables
-                            </a>
                         </div>
                     </div>
 
@@ -277,7 +271,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="col-xl-6 col-md-6">
                                 <div class="left"><h4>Sản phẩm đã tồn kho lâu</h4>
                                     <button class="btn btn-primary" onclick="showmore4(event)"><div id="more"> Xem thêm </div> <div style="display: none" id="hide"> Ẩn bớt</div></button>
@@ -325,39 +319,33 @@
                     </div><br>
                     <div class="row">
                         <div class="col-xl-6">
-                            <div class="card mb-4">
-                                <div class="card-header">
-                                    <i class="fas fa-chart-area me-1"></i>
-                                    Area Chart Example
-                                </div>
-                                <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-                            </div>
+                            <div id="myChart" style="width:100%; max-width:600px; height:500px;"></div>
                         </div>
                         <div class="col-xl-6">
-                            <div class="card mb-4">
-                                <div class="card-header">
-                                    <i class="fas fa-chart-bar me-1"></i>
-                                    Bar Chart Example
-                                </div>
-                                <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+                            <div
+                                id="myChart2" style="width:100%; max-width:600px; height:500px;">
                             </div>
                         </div>
                     </div>
+                    <footer class="py-4 bg-light mt-auto">
+                        <div class="container-fluid px-4">
+                            <div class="d-flex align-items-center justify-content-between small">
+                                <div class="text-muted">Liên Hệ SDT: 0989373658 <br>
+                                    Văn phòng phẩm Lan Anh, TDP Kiên Quyết,Phường Dương Nội, Quận Hà Đông, Hà Nội 
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
             </div>
         </div>
     </main>
-    <footer class="py-4 bg-light mt-auto">
 
-    </footer>
-</div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-<script src="../js/scripts.js" type="text/javascript"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-<script src="../assets/demo/chart-area-demo.js"></script>
-<script src="../assets/demo/chart-bar-demo.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-<script src="../js/datatables-simple-demo.js" type="text/javascript"></script>
-<script src="../js/pagger.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="../js/scripts.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+    <script src="../js/datatables-simple-demo.js" type="text/javascript"></script>
+    <script src="../js/pagger.js" type="text/javascript"></script>
+
 </body>
 </html>
